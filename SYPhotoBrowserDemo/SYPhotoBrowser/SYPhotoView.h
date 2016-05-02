@@ -18,7 +18,6 @@ typedef NS_ENUM(NSInteger, SYPhotoStatus) {
     SYPhotoStatusOriginal       //高画质图片（原图）
 };
 
-
 @interface SYPhotoView : UIScrollView
 
 @property (nonatomic, strong) SYImageView *imageView;
@@ -27,11 +26,8 @@ typedef NS_ENUM(NSInteger, SYPhotoStatus) {
 
 @property (nonatomic, assign) SYPhotoStatus photoStatus;
 
-@property (nonatomic, strong) UILabel *showTitle;
-
 @property (nonatomic, copy) void (^dismissBlock)();
 
 @property (nonatomic, copy) void (^saveImageBlock)(SYImageView *imageView);
-
 
 @end

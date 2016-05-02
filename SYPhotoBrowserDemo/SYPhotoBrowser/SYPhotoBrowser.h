@@ -47,6 +47,4 @@
 //文字数组（图片底部展示文字, 可选）
 @property (nonatomic, strong) NSArray *titles;
 
-
-
 @end
