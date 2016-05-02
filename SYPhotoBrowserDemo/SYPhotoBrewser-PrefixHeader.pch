@@ -1,0 +1,36 @@
+//
+//  SYPhotoBrewser-PrefixHeader.pch
+//  SYPhotoBrowserDemo
+//
+//  Created by 孙宇 on 16/5/2.
+//  Copyright © 2016年 SY. All rights reserved.
+//
+
+#ifndef SYPhotoBrewser_PrefixHeader_pch
+#define SYPhotoBrewser_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* SYPhotoBrewser_PrefixHeader_pch */
+
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+#import "SYPhotoBrowser.h"
+
+#define SYTitles @[@"1.创建手势实例。当创建手势时，指定一个回调方法，当手势开始，改变、或结束时，回调方法被调用。",@"2.添加到需要识别的View中。每个手势只对应一个View，当屏幕触摸在View的边界内时，如果手势和预定的一样，那就会回调方法。",@"3.建议在真机上运行这些手势,模拟器操作不太方便，可能导致你认为手势失效。",@"4.百度百科是百度公司推出的一部内容开放、自由的网络百科全书平台。",@"5.其测试版于2006年4月20日上线，正式版在2008年4月21日发布",@"6.截至2016年4月，百度百科已经收录了超过1300多万的词条",@"7.参与词条编辑的网友超过580万人，几乎涵盖了所有已知的知识领域",@"8.百度百科旨在创造一个涵盖各领域知识的中文信息收集平台。",@"9.百度百科强调用户的参与和奉献精神，充分调动互联网用户的力量，汇聚上亿用户的头脑智慧，积极进行交流和分享。"]
+
+//缩略图
+#define SYThumbImages @[@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_6045a300d79066be93896fa68c306048.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_ddf806c52b4fffed8d10ea22fe0aefa7.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_fbcd050542555e6a4d35cc92f4fc5cec.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_d3e7c20acb70b2554825e4fa35919da8.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_f58cf571f152660ef09b150f9b3b1f0c.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_725621ddcb287ffcb0bc3524e62dfc21.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_fe899e8d631d586224edb11fb0842df7.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_220ab5198d566031e00e82f9583cd453.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb2_9ef8a9a6ae90a54df25a9727223c3bc2.jpeg"]
+
+//低画质图片
+#define SYLowImages @[@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_6045a300d79066be93896fa68c306048.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_ddf806c52b4fffed8d10ea22fe0aefa7.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_fbcd050542555e6a4d35cc92f4fc5cec.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_d3e7c20acb70b2554825e4fa35919da8.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_f58cf571f152660ef09b150f9b3b1f0c.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_725621ddcb287ffcb0bc3524e62dfc21.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_fe899e8d631d586224edb11fb0842df7.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_220ab5198d566031e00e82f9583cd453.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/thumb1_9ef8a9a6ae90a54df25a9727223c3bc2.jpeg"]
+
+//高画质图片（原图）
+#define SYOriginalImages @[@"http://static.newnewle.com/bundles/webappindex/upload/user/img/6045a300d79066be93896fa68c306048.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/ddf806c52b4fffed8d10ea22fe0aefa7.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/fbcd050542555e6a4d35cc92f4fc5cec.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/d3e7c20acb70b2554825e4fa35919da8.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/f58cf571f152660ef09b150f9b3b1f0c.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/725621ddcb287ffcb0bc3524e62dfc21.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/fe899e8d631d586224edb11fb0842df7.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/220ab5198d566031e00e82f9583cd453.jpeg",@"http://static.newnewle.com/bundles/webappindex/upload/user/img/9ef8a9a6ae90a54df25a9727223c3bc2.jpeg"]
+
+
+
