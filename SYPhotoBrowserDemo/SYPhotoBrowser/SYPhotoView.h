@@ -2,21 +2,16 @@
 //  SYPhotoView.h
 //  SYPhotoBrowserDemo
 //
+//  GitHub：https://github.com/1102210843
+//
 //  Created by 孙宇 on 16/5/2.
 //  Copyright © 2016年 SY. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "SYImageView.h"
+#import "SYPhotoBrowserTool.h"
 
-#define SYScreenWidth [UIScreen mainScreen].bounds.size.width
-#define SYScreenHeight [UIScreen mainScreen].bounds.size.height
-
-typedef NS_ENUM(NSInteger, SYPhotoStatus) {
-    SYPhotoStatusNone,          //未设置图片
-    SYPhotoStatusLowQuality,    //低画质图片
-    SYPhotoStatusOriginal       //高画质图片（原图）
-};
 
 @interface SYPhotoView : UIScrollView
 

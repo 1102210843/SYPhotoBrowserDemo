@@ -10,18 +10,13 @@
 #import "SYPhotoView.h"
 #import "UIImageView+WebCache.h"
 
-typedef NS_ENUM(NSInteger, SYImageType) {
-    SYImageTypeUIImage,
-    SYImageTypeUrl,
-    SYImageTypeStringUrl,
-    SYImageTypeImageName
-};
-
 @interface SYPhotoBrowser () <UIScrollViewDelegate>
 
 @property (nonatomic,assign) BOOL hasShowedPhotoBrowser;
 
 @property (nonatomic,assign) CGFloat touchDistance; //拖动底部说明文字时，计算触摸点与底部视图y坐标的距离
+
+@property (nonatomic, assign) CGFloat panStartY;    //拖动底部说明文字开始坐标
 
 @end
 
@@ -54,10 +49,12 @@ typedef NS_ENUM(NSInteger, SYImageType) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor blackColor];
+    
     [self addScrollerView];
     
     [self addTools];
 }
+
 
 - (void)addScrollerView
 {
@@ -134,6 +131,7 @@ typedef NS_ENUM(NSInteger, SYImageType) {
     
     //计算触摸点与y坐标距离
     if (UIGestureRecognizerStateBegan == paramSender.state) {
+        _panStartY = location.y;
         _touchDistance = location.y-_bottomView.frame.origin.y;
     }
     
@@ -149,17 +147,28 @@ typedef NS_ENUM(NSInteger, SYImageType) {
         paramSender.view.frame = frame;
         [paramSender setTranslation:CGPointZero inView:self.view];
     }else if (UIGestureRecognizerStateEnded == paramSender.state){
-        //拖动结束时回弹
-        [UIView animateWithDuration:0.4 animations:^{
-            CGFloat bottomHeight = _titleLabel.frame.size.height+30;
-            if (bottomHeight < 100) {
-                bottomHeight = 100;
-            }
-            CGRect frame = paramSender.view.frame;
-            frame.origin.y = SYScreenHeight-bottomHeight;
-            paramSender.view.frame = frame;
-            [paramSender setTranslation:CGPointZero inView:self.view];
-        }];
+        
+        if (_panStartY < location.y) {
+            //拖动结束时回弹
+            [UIView animateWithDuration:0.4 animations:^{
+                CGRect frame = paramSender.view.frame;
+                frame.origin.y = SYScreenHeight-100;
+                paramSender.view.frame = frame;
+                [paramSender setTranslation:CGPointZero inView:self.view];
+            }];
+        }else{
+            //拖动结束时回弹
+            [UIView animateWithDuration:0.4 animations:^{
+                CGFloat bottomHeight = _titleLabel.frame.size.height+30;
+                if (bottomHeight < 100) {
+                    bottomHeight = 100;
+                }
+                CGRect frame = paramSender.view.frame;
+                frame.origin.y = SYScreenHeight-bottomHeight;
+                paramSender.view.frame = frame;
+                [paramSender setTranslation:CGPointZero inView:self.view];
+            }];
+        }
     }
 }
 
@@ -177,7 +186,6 @@ typedef NS_ENUM(NSInteger, SYImageType) {
 {
     [_activity startAnimating];
     UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-    
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
@@ -185,33 +193,9 @@ typedef NS_ENUM(NSInteger, SYImageType) {
     [_activity stopAnimating];
     
     if (!error) {
-        [self promptWithTitle:@"保存成功"];
+        [SYPhotoBrowserTool promptWithTitle:@"保存成功"];
     }else{
-        [self promptWithTitle:@"保存失败"];
-    }
-}
-
-//提示框
-- (void)promptWithTitle:(NSString *)title
-{
-    __block UILabel *view = [[UILabel alloc]initWithFrame:CGRectMake((SYScreenWidth-100)/2, (SYScreenHeight-50)/2, 100, 50)];
-    [view setBackgroundColor:[UIColor colorWithRed:20.0f/255.0f green:20.0f/255.0f blue:20.0f/255.0f alpha:0.8f]];
-    view.clipsToBounds = YES;
-    view.layer.cornerRadius = 5;
-    view.textAlignment = NSTextAlignmentCenter;
-    view.textColor = [UIColor whiteColor];
-    view.text = title;
-    [self.view addSubview:view];
-    
-    if ([title isEqualToString:@"下载失败,请点击重试"]){
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ontapDownLoadImage:)];
-        [view addGestureRecognizer:tap];
-    }else{
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [view removeFromSuperview];
-            view = nil;
-        });
+        [SYPhotoBrowserTool promptWithTitle:@"保存失败"];
     }
 }
 
@@ -251,7 +235,7 @@ typedef NS_ENUM(NSInteger, SYImageType) {
         rect = CGRectMake(SYScreenWidth/2, SYScreenHeight/2, 0, 0);
     }
 
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         photoView.imageView.frame = rect;
         [photoView setContentSize:CGSizeMake(SYScreenWidth, SYScreenHeight)];
         [photoView setContentOffset:CGPointMake(0, 0)];
@@ -277,18 +261,18 @@ typedef NS_ENUM(NSInteger, SYImageType) {
         currentRect = CGRectMake(SYScreenWidth/2, SYScreenHeight/2, 0, 0);
     }
     
+    __weak typeof(self)mySelf = self;
     for (NSInteger i = 0; i < _originalImages.count; i++) {
         
         SYPhotoView *photoView = [[SYPhotoView alloc]initWithFrame:CGRectMake(i*SYScreenWidth, 0, SYScreenWidth, SYScreenHeight)];
         photoView.tag = i + 1000;
-        __weak typeof(self)mySelf = self;
-        
-        if (i == _currentIndex) {
+
+        if (i == _currentIndex && !_is3DTouch) {
             photoView.imageView.isFirst = YES;
             photoView.imageView.frame = CGRectMake(currentRect.origin.x, currentRect.origin.y, currentRect.size.width, currentRect.size.height);
         }
         
-        [photoView.imageView setImage:[self getThumbImageWithIndex:i]];
+        [photoView.imageView setImage:[SYPhotoBrowserTool getThumbImageWithIndex:i thumbImages:_thumbImages]];
         
         photoView.dismissBlock = ^(){
             [mySelf dismiss];
@@ -301,14 +285,19 @@ typedef NS_ENUM(NSInteger, SYImageType) {
     }
     [_backScroller setContentSize:CGSizeMake(SYScreenWidth*_originalImages.count, 0)];
     [_backScroller setContentOffset:CGPointMake(SYScreenWidth*_currentIndex, 0)];
-
-    [self setPhotoViewImageWithIndex:_currentIndex origina:NO finshedBlock:^(SYPhotoView *photoView, CGSize imageSize) {
-        [UIView animateWithDuration:0.5 animations:^{
-            CGSize imageSize = photoView.imageView.image.size;
-            CGFloat height = imageSize.height*(SYScreenWidth/imageSize.width);
-            photoView.imageView.frame = CGRectMake(0, (SYScreenHeight-height)/2, SYScreenWidth, height);
+    
+    
+    if (mySelf.is3DTouch) {
+        [self setPhotoViewImageWithIndex:_currentIndex origina:NO finshedBlock:nil];
+    }else{
+        [self setPhotoViewImageWithIndex:_currentIndex origina:NO finshedBlock:^(SYPhotoView *photoView, CGSize imageSize) {
+            [UIView animateWithDuration:0.3 animations:^{
+                CGSize imageSize = photoView.imageView.image.size;
+                CGFloat height = imageSize.height*(SYScreenWidth/imageSize.width);
+                photoView.imageView.frame = CGRectMake(0, (SYScreenHeight-height)/2, SYScreenWidth, height);
+            }];
         }];
-    }];
+    }
     
 }
 
@@ -351,20 +340,20 @@ typedef NS_ENUM(NSInteger, SYImageType) {
     if (SYPhotoStatusNone == photoView.photoStatus ||
         SYPhotoStatusLowQuality == photoView.photoStatus) {
         
-        image = [self getLowQualityImageWithIndex:index];
+        image = [SYPhotoBrowserTool getLowQualityImageWithIndex:index lowQualityImages:_lowQualityImages];
         
         if (!image) {
-            image = [self getOriginalImageWithIndex:index];
+            image = [SYPhotoBrowserTool getOriginalImageWithIndex:index originalImages:_originalImages];
             photoView.photoStatus = SYPhotoStatusOriginal;
         }else{
             photoView.photoStatus = SYPhotoStatusLowQuality;
         }
     }else{
-        image = [self getOriginalImageWithIndex:index];
+        image = [SYPhotoBrowserTool getOriginalImageWithIndex:index originalImages:_originalImages];
         photoView.photoStatus = SYPhotoStatusOriginal;
     }
     
-    SYImageType imageType = [self getImageTypeWithImaeg:image];
+    SYImageType imageType = [SYPhotoBrowserTool getImageTypeWithImage:image];
     
     switch (imageType) {
         case SYImageTypeUIImage:{
@@ -386,7 +375,7 @@ typedef NS_ENUM(NSInteger, SYImageType) {
             [photoView.imageView sd_setImageWithURL:[NSURL URLWithString:image] placeholderImage:photoView.imageView.image completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 
                 if (error) {
-                    [self promptWithTitle:@"下载失败,请点击重试"];
+                    [SYPhotoBrowserTool promptWithTitle:@"下载失败,请点击重试" target:self onSEL:@selector(ontapDownLoadImage:)];
                 }else{
                     if (finshedBlock) {
                         finshedBlock(photoView, image.size);
@@ -402,7 +391,7 @@ typedef NS_ENUM(NSInteger, SYImageType) {
             [photoView.imageView sd_setImageWithURL:image placeholderImage:photoView.imageView.image completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 
                 if (error) {
-                    [self promptWithTitle:@"下载失败,请点击重试"];
+                    [SYPhotoBrowserTool promptWithTitle:@"下载失败,请点击重试" target:self onSEL:@selector(ontapDownLoadImage:)];
                 }else{
                     if (finshedBlock) {
                         finshedBlock(photoView, image.size);
@@ -440,50 +429,7 @@ typedef NS_ENUM(NSInteger, SYImageType) {
 
 
 
-//获取缩略图
-- (UIImage *)getThumbImageWithIndex:(NSInteger)index
-{
-    if (_thumbImages && index < _thumbImages.count) {
-        return _thumbImages[index];
-    }
-    return nil;
-}
 
-//获取低画质图片
-- (id)getLowQualityImageWithIndex:(NSInteger)index
-{
-    if (_lowQualityImages && index < _lowQualityImages.count) {
-        return _lowQualityImages[index];
-    }
-    return nil;
-}
-
-//获取高画质图片（原图）
-- (id)getOriginalImageWithIndex:(NSInteger)index
-{
-    if (_originalImages && index < _originalImages.count) {
-        return _originalImages[index];
-    }
-    return nil;
-}
-
-
-//判断图片类型
-- (SYImageType)getImageTypeWithImaeg:(id)image
-{
-    if ([image isKindOfClass:[UIImage class]]) {
-        return SYImageTypeUIImage;
-    }else if ([image isKindOfClass:[NSURL class]]){
-        return SYImageTypeUrl;
-    }else{
-        NSString *imageString = image;
-        if ([imageString hasPrefix:@"http"]) {
-            return SYImageTypeStringUrl;
-        }else{
-            return SYImageTypeImageName;
-        }
-    }
-}
 
 
 //获取控件在屏幕上的位置

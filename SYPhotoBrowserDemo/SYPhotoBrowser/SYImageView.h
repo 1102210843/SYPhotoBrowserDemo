@@ -2,6 +2,8 @@
 //  SYImageView.h
 //  SYPhotoBrowserDemo
 //
+//  GitHub：https://github.com/1102210843
+//
 //  Created by 孙宇 on 16/5/2.
 //  Copyright © 2016年 SY. All rights reserved.
 //

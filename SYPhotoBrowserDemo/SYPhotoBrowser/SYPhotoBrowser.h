@@ -2,16 +2,25 @@
 //  SYPhotoBrowser.h
 //  SYPhotoBrowserDemo
 //
+//  GitHub：https://github.com/1102210843
+//
 //  Created by 孙宇 on 16/5/1.
 //  Copyright © 2016年 SY. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "SY3DTouchPreviewController.h"
 
 @interface SYPhotoBrowser : UIViewController
 
 //显示图片浏览器
 - (void)show;
+
+#pragma mark - 使用3D Touch方式进入，图片将不会产生放大效果
+//是否是以3D Touch方式进入
+@property (nonatomic, assign) BOOL is3DTouch;
+
+#pragma mark - 设置数据
 
 /**
  *  原图数组（在有低画质图片时，点击原图按钮加载原图。必须有原图，所数据均以原图数组为准）

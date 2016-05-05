@@ -12,6 +12,7 @@
 #import "SYPhotoBrowser.h"
 #import "SYFirstViewController.h"
 #import "SYSecondViewController.h"
+#import "SY3DTouchViewController.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -38,7 +39,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 
@@ -52,7 +53,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     
-    NSArray *array = @[@"九宫格",@"瀑布流"];
+    NSArray *array = @[@"九宫格",@"瀑布流",@"3D Touch"];
     
     cell.textLabel.text = array[indexPath.row];
     
@@ -69,6 +70,10 @@
     }else if (indexPath.row == 1){
         SYSecondViewController *VC = [[SYSecondViewController alloc]init];
         VC.title = @"瀑布流";
+        [self.navigationController pushViewController:VC animated:YES];
+    }else if (indexPath.row == 2){
+        SY3DTouchViewController *VC = [[SY3DTouchViewController alloc]init];
+        VC.title = @"3D Touch";
         [self.navigationController pushViewController:VC animated:YES];
     }
 }

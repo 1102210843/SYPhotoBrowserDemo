@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A4CEF6631CDB4C3F00804C31 /* SY3DTouchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CEF6621CDB4C3F00804C31 /* SY3DTouchViewController.m */; };
+		A4CEF6661CDB5EC500804C31 /* SY3DTouchPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CEF6651CDB5EC500804C31 /* SY3DTouchPreviewController.m */; };
+		A4CEF6691CDB625C00804C31 /* SYPhotoBrowserTool.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CEF6681CDB625C00804C31 /* SYPhotoBrowserTool.m */; };
 		E9CA00041CD6493F009FAD17 /* SYPhotoBrowserDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E9CA00031CD6493F009FAD17 /* SYPhotoBrowserDemoTests.m */; };
 		E9CA000F1CD6493F009FAD17 /* SYPhotoBrowserDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E9CA000E1CD6493F009FAD17 /* SYPhotoBrowserDemoUITests.m */; };
 		E9CA003E1CD65AA1009FAD17 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E9CA001E1CD65AA1009FAD17 /* MKAnnotationView+WebCache.m */; };
@@ -62,6 +65,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A4CEF6611CDB4C3F00804C31 /* SY3DTouchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SY3DTouchViewController.h; sourceTree = "<group>"; };
+		A4CEF6621CDB4C3F00804C31 /* SY3DTouchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SY3DTouchViewController.m; sourceTree = "<group>"; };
+		A4CEF6641CDB5EC500804C31 /* SY3DTouchPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SY3DTouchPreviewController.h; sourceTree = "<group>"; };
+		A4CEF6651CDB5EC500804C31 /* SY3DTouchPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SY3DTouchPreviewController.m; sourceTree = "<group>"; };
+		A4CEF6671CDB625C00804C31 /* SYPhotoBrowserTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPhotoBrowserTool.h; sourceTree = "<group>"; };
+		A4CEF6681CDB625C00804C31 /* SYPhotoBrowserTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPhotoBrowserTool.m; sourceTree = "<group>"; };
 		E9CA00031CD6493F009FAD17 /* SYPhotoBrowserDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYPhotoBrowserDemoTests.m; sourceTree = "<group>"; };
 		E9CA00051CD6493F009FAD17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9CA000A1CD6493F009FAD17 /* SYPhotoBrowserDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SYPhotoBrowserDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,10 +228,14 @@
 			children = (
 				E9CA004F1CD65BA9009FAD17 /* SYPhotoBrowser.h */,
 				E9CA00501CD65BA9009FAD17 /* SYPhotoBrowser.m */,
+				A4CEF6641CDB5EC500804C31 /* SY3DTouchPreviewController.h */,
+				A4CEF6651CDB5EC500804C31 /* SY3DTouchPreviewController.m */,
 				E9CA00521CD66A7E009FAD17 /* SYPhotoView.h */,
 				E9CA00531CD66A7E009FAD17 /* SYPhotoView.m */,
 				E9CA00621CD68682009FAD17 /* SYImageView.h */,
 				E9CA00631CD68682009FAD17 /* SYImageView.m */,
+				A4CEF6671CDB625C00804C31 /* SYPhotoBrowserTool.h */,
+				A4CEF6681CDB625C00804C31 /* SYPhotoBrowserTool.m */,
 			);
 			path = SYPhotoBrowser;
 			sourceTree = "<group>";
@@ -275,6 +288,8 @@
 				E9CA006B1CD74F76009FAD17 /* SYSecondViewController.m */,
 				E9CA006D1CD75092009FAD17 /* SYSecondCollectionViewCell.h */,
 				E9CA006E1CD75092009FAD17 /* SYSecondCollectionViewCell.m */,
+				A4CEF6611CDB4C3F00804C31 /* SY3DTouchViewController.h */,
+				A4CEF6621CDB4C3F00804C31 /* SY3DTouchViewController.m */,
 				E9CAFFF21CD6493F009FAD17 /* Main.storyboard */,
 				E9CAFFF51CD6493F009FAD17 /* Assets.xcassets */,
 				E9CAFFF71CD6493F009FAD17 /* LaunchScreen.storyboard */,
@@ -364,7 +379,6 @@
 					};
 					E9CAFFE51CD6493E009FAD17 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 442GN6Q5NW;
 					};
 					E9CAFFFE1CD6493F009FAD17 = {
 						CreatedOnToolsVersion = 7.3;
@@ -440,6 +454,7 @@
 				E9CA004B1CD65AA1009FAD17 /* UIImageView+HighlightedWebCache.m in Sources */,
 				E9CA003F1CD65AA1009FAD17 /* NSData+ImageContentType.m in Sources */,
 				E9CA00451CD65AA1009FAD17 /* SDWebImageManager.m in Sources */,
+				A4CEF6631CDB4C3F00804C31 /* SY3DTouchViewController.m in Sources */,
 				E9CA00431CD65AA1009FAD17 /* SDWebImageDownloader.m in Sources */,
 				E9CA004A1CD65AA1009FAD17 /* UIImage+WebP.m in Sources */,
 				E9CA00511CD65BA9009FAD17 /* SYPhotoBrowser.m in Sources */,
@@ -450,10 +465,12 @@
 				E9CA003E1CD65AA1009FAD17 /* MKAnnotationView+WebCache.m in Sources */,
 				E9CA006C1CD74F76009FAD17 /* SYSecondViewController.m in Sources */,
 				E9CA00671CD719BE009FAD17 /* SYFirstViewController.m in Sources */,
+				A4CEF6661CDB5EC500804C31 /* SY3DTouchPreviewController.m in Sources */,
 				E9CA00421CD65AA1009FAD17 /* SDWebImageDecoder.m in Sources */,
 				E9CA00491CD65AA1009FAD17 /* UIImage+MultiFormat.m in Sources */,
 				E9CA00441CD65AA1009FAD17 /* SDWebImageDownloaderOperation.m in Sources */,
 				E9CAFFEE1CD6493F009FAD17 /* AppDelegate.m in Sources */,
+				A4CEF6691CDB625C00804C31 /* SYPhotoBrowserTool.m in Sources */,
 				E9CA00471CD65AA1009FAD17 /* UIButton+WebCache.m in Sources */,
 				E9CA00461CD65AA1009FAD17 /* SDWebImagePrefetcher.m in Sources */,
 				E9CA00641CD68682009FAD17 /* SYImageView.m in Sources */,
@@ -682,6 +699,7 @@
 				E9CA00151CD6493F009FAD17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E9CA00161CD6493F009FAD17 /* Build configuration list for PBXNativeTarget "SYPhotoBrowserDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -690,6 +708,7 @@
 				E9CA00181CD6493F009FAD17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E9CA00191CD6493F009FAD17 /* Build configuration list for PBXNativeTarget "SYPhotoBrowserDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -698,6 +717,7 @@
 				E9CA001B1CD6493F009FAD17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E9CAFFE11CD6493E009FAD17 /* Build configuration list for PBXProject "SYPhotoBrowserDemo" */ = {
 			isa = XCConfigurationList;
