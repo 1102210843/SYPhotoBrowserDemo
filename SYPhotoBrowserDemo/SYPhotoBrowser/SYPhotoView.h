@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong) SYImageView *imageView;
 
+@property (nonatomic, assign) CGSize imageSize;
+
 @property (nonatomic, strong) UIImage *thumbImage;
 
 @property (nonatomic, assign) SYPhotoStatus photoStatus;

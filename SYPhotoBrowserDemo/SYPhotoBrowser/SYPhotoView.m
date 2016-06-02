@@ -17,8 +17,6 @@
     CGFloat currentScale;
     CGPoint _currentCenter;
     CGSize _currentSize;
-    
-    CGSize _imageSize;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame

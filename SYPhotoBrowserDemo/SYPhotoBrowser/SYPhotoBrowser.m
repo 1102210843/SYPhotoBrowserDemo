@@ -295,6 +295,7 @@
                 CGSize imageSize = photoView.imageView.image.size;
                 CGFloat height = imageSize.height*(SYScreenWidth/imageSize.width);
                 photoView.imageView.frame = CGRectMake(0, (SYScreenHeight-height)/2, SYScreenWidth, height);
+                photoView.imageSize = photoView.frame.size;
             }];
         }];
     }
