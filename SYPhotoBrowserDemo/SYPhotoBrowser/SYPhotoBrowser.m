@@ -296,10 +296,11 @@
                 CGFloat height = imageSize.height*(SYScreenWidth/imageSize.width);
                 photoView.imageView.frame = CGRectMake(0, (SYScreenHeight-height)/2, SYScreenWidth, height);
                 photoView.imageSize = photoView.frame.size;
+            } completion:^(BOOL finished) {
+                photoView.imageView.isFirst = NO;
             }];
         }];
     }
-    
 }
 
 //滑动切换图片
@@ -330,6 +331,8 @@
                            origina:(BOOL)origina
                       finshedBlock:(void(^)(SYPhotoView *photoView, CGSize imageSize))finshedBlock
 {
+    [self viewRestWithRuleOutIndex:index];
+    
     SYPhotoView *photoView = [_backScroller viewWithTag:index+1000];
     
     if (origina) {
@@ -413,6 +416,30 @@
     }
 }
 
+- (void)viewRestWithRuleOutIndex:(NSInteger)index
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        NSArray *views = _backScroller.subviews;
+        
+        for (UIView *view in views) {
+            if ([view isMemberOfClass:[SYPhotoView class]]) {
+                SYPhotoView *photoView = (SYPhotoView *)view;
+                if (photoView.tag != index+1000) {
+                    CGFloat height = CGRectGetHeight(photoView.imageView.frame)*(SYScreenWidth/CGRectGetWidth(photoView.imageView.frame));
+                    CGRect frame = CGRectMake(0, (SYScreenHeight-height)/2, SYScreenWidth, height);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        photoView.imageView.frame = frame;
+                        [photoView setContentSize:CGSizeMake(SYScreenWidth, (height>SYScreenHeight)?height:SYScreenHeight)];
+                    });
+                }
+            }
+        }
+    });
+}
+
+
+
 //设置说明文字
 - (void)setTitleLabelTextWithIndex:(NSInteger)index
 {
@@ -427,9 +454,6 @@
         _bottomView.frame = frame;
     }
 }
-
-
-
 
 
 

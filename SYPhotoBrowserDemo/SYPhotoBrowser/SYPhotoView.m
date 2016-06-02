@@ -227,6 +227,7 @@
 
 
 #pragma mark - UIGestureRecognizerDelegate
+//解决手势冲突
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
